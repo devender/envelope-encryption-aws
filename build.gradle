@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: "io.spring.dependency-management"
+
+jar {
+    baseName = 'envelope-encryption-aws'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.47'
+    }
+}
+
+dependencies {
+    compile('com.amazonaws:aws-java-sdk-s3')
+    testCompile( 'junit:junit:4.12')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
